@@ -15,7 +15,7 @@ const taskPrioritizerBot = new AI({
 
 const taskExecutorBot = new AI({
   instruction:
-    "You are a task execution agent. You are tasked with executing tasks for the AI system to complete a given objective. You will be given a task and asked to execute it.",
+    "You are a task execution agent. You are tasked with executing tasks for the AI system to complete a given objective. You will be given a task and asked to execute it. Be concise.",
 });
 
 const taskCreatorBotResponse = await taskCreatorBot.ask(
@@ -45,12 +45,13 @@ while (shouldProceed) {
 
   const taskExecutionResult = await taskExecutorBot.ask(
     `Objective:${objective}\n\nTask: ${nextTask}\n\nExecute the task. Return the result.`,
-    { chatId: "baby-agi", temperature: .8 },
+    { chatId: "baby-agi", temperature: .6 },
   );
 
   executedTasks.push(taskExecutionResult!.content);
 
   console.log(taskExecutionResult!.content, "\n");
 
+  console.log(`Upcoming task: ${prioritizedTasksList[0]}`)
   shouldProceed = confirm("Do you want to proceed?");
 }
